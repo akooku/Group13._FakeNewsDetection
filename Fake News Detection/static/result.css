@@ -1,0 +1,39 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Verdana', sans-serif;
+    background-image: url('fake-news.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+h2 {
+    color: #333;
+}
+
+p {
+    margin: 10px 0;
+}
+
+p:first-child {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+p:last-child {
+    font-style: italic;
+    color: #555;
+}

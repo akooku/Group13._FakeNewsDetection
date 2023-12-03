@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static\styles.css">
+    <title>Fake News Detector</title>
+    <style>
+        .input-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fake News Detector</h1>
+        <form id="newsForm" action="/predict" method="post" enctype="multipart/form-data">
+            <label for="input_type">Choose Input Type:</label>
+            <select name="input_type" id="input_type" required onchange="toggleInputSection(event)">
+                <option value="text">Text</option>
+                <option value="url">URL</option>
+                <option value="image">Image</option>
+            </select>
+            <br>
+
+            <!-- Single Input Fields -->
+            <div id="text_input" class="input-section">
+                <label for="text_input">Enter your news article:</label>
+                <textarea name="text_input" rows="5" cols="50" required></textarea>
+            </div>
+
+            <div id="url_input" class="input-section">
+                <label for="url_input">Enter URL:</label>
+                <input type="url" name="url_input" required>
+            </div>
+
+            <div id="image_input" class="input-section">
+                <label for="image_input">Upload Image:</label>
+                <input type="file" name="image_input" accept="image/*" required>
+            </div>
+
+            <br>
+            <input type="button" value="Check News" onclick="submitForm()">
+        </form>
+
+        <script>
+            function toggleInputSection() {
+                // Hide all input sections
+                document.querySelectorAll('.input-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                // Show the selected input section
+                const selectedInputType = document.getElementById('input_type').value;
+                document.getElementById(`${selectedInputType}_input`).style.display = 'block';
+            }
+            function submitForm() {
+                // Get selected input type
+                const inputType = document.getElementById('input_type').value;
+
+                // Validate based on the selected input type
+                switch (inputType) {
+                    case 'text':
+                        const textInput = document.getElementsByName('text_input')[0].value.trim();
+                        if (textInput === '') {
+                            alert('Please enter your news article.');
+                            return; // Stop form submission
+                        }
+                        break;
+
+                    case 'url':
+                        const urlInput = document.getElementsByName('url_input')[0].value.trim();
+                        if (urlInput === '') {
+                            alert('Please enter a URL.');
+                            return; // Stop form submission
+                        }
+                        // Validate URL format
+                        const urlRegex = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/\S*)?$/;
+                        if (!urlRegex.test(urlInput)) {
+                            alert('Please enter a valid URL.');
+                            return; // Stop form submission
+                        }
+                        break;
+
+                    case 'image':
+                        const imageInput = document.getElementsByName('image_input')[0].files[0];
+                        if (!imageInput) {
+                            alert('Please upload an image.');
+                            return; // Stop form submission
+                        }
+                        break;
+
+                    default:
+                        alert('Invalid input type selected.');
+                        return; // Stop form submission
+                }
+
+                // Submit the form
+                document.forms['newsForm'].submit();
+            }
+        </script>
+        
+    </div>
+</body>
+</html>
